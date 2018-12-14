@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>reloj</title>
+	<link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+
+</head>
+<body>
+	<style type="text/css">
+		
+	* {
+		margin:0;
+		padding:0;
+		-webkit-box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		box-sizing:border-box;
+	}
+
+	body {
+		background:#ccc;
+		background-size:cover;
+		color:#fff;
+		font-size:16px;
+	}
+
+	.wrap {
+		width:90%;
+		max-width:1000px;
+	}
+
+	.widget {
+		width:45%;
+		margin:2em;
+	}
+
+	.widget p {
+		display:inline-block;
+		line-height:1em;
+	}
+
+	.fecha {
+		font-size:Oswald, Arial;
+		text-align:center;
+		font-size:1.5em;
+		margin-bottom:0.3125rem;
+		background:rgba(0,0,0,.5);
+		padding:20px;
+		width:100%;
+	}
+
+	.reloj {
+		font-size:Oswald, Arial;
+		text-align:center;
+		font-size:4em;
+		background:rgba(0,0,0,.5);
+		padding:20px;
+		width:100%;
+	}
+
+	.reloj .cs {
+		display:inline-block;
+	}
+	.reloj .se,
+	.reloj .ap {
+		font-size:2rem;
+		display:block;
+	}
+	
+	.radi {
+	    border:30px solid #000;
+	    width:130px;
+	    height: 130px;
+	    border-radius: 100%;
+	    position: absolute;
+	    border-top-color:#f42664;
+	    border-top-style:groove;
+	    left:50%;
+	    top:50%;
+	    /*-webkit-animation:spin 122.5s linear infinite;
+	    -o-animation:spin 11.5s linear infinite;*/
+	    animation:spin 1s linear infinite;
+	}
+
+@keyframes spin {from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+	
+
+	</style>
+	
+	<div class="wrap">
+		<div class="widget">
+			<div class="fecha">
+				<p id="ds" class="ds"></p>
+				<p id="d" class="d"></p>
+				<p>de</p>
+				<p id="m" class="m"></p>
+				<p>del</p>
+				<p id="a" class="a"></p>
+			</div>
+
+			<div class="reloj">
+				<p id="h" class="h"></p>
+				<p>:</p>
+				<p id="mi" class="mi"></p>
+				<p>:</p>
+				<div class="cs">
+					<p id="ap" class="ap"></p>
+					<p id="se" class="se"></p>
+				</div>
+				<p id="mili" class="mili"></p>
+			</div>
+		</div>
+	</div>
+	
+	<div class="wrap">
+		<div class="widget">
+			<div class="fecha">
+				<p id="diasemana" class="ds"></p>
+				<p id="dia" class="d"></p>
+				<p>de</p>
+				<p id="mes" class="m"></p>
+				<p>del</p>
+				<p id="year" class="a"></p>
+			</div>
+
+			<div class="reloj">
+				<p id="horas" class="h"></p>
+				<p>:</p>
+				<p id="minutos" class="mi"></p>
+				<p>:</p>
+				<div class="cs">
+					<p id="ampm" class="ap"></p>
+					<p id="segundos" class="se"></p>
+				</div>
+				<!--p id="mili" class="mili"></p-->
+			</div>
+		</div>
+	</div>
+	
+	<div class="radi"></div>
+
+	<script>
+		
+		var act = function() {
+
+	        var fecha = new Date();
+				var horas = fecha.getHours();
+				var ampm;
+				var minutos = fecha.getMinutes();
+				var segundos = fecha.getSeconds();
+				var diasemana = fecha.getDay();
+				var dia = fecha.getDate();
+				var mes = fecha.getMonth();
+				var year = fecha.getFullYear();
+				var mili = fecha.getMilliseconds();
+
+				var phoras = document.getElementById("h");
+				var pampm =document.getElementById("ap");
+				var pminutos = document.getElementById("mi");
+				var psegundos = document.getElementById("se");
+				var pdiasemana = document.getElementById("ds");
+				var pdia = document.getElementById("d");
+				var pmes = document.getElementById("m");
+				var pyear = document.getElementById("a");
+				var pmili = document.getElementById("mili");
+
+				var semana = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+				pdiasemana.textContent = semana[diasemana];
+
+				pdia.textContent = dia;
+
+				var meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Septiembre','Diciembre'];
+				pmes.textContent = meses[mes];
+
+				pyear.textContent = year;
+
+				if(horas>=12) {
+					horas = horas - 12;
+					ampm = "PM";
+				} else {
+					ampm = "AM";
+				}
+
+				if(horas==0) {
+					horas = 12;
+				};
+
+				phoras.textContent = horas;
+				pampm.textContent = ampm;
+
+				if(minutos<10) { minutos = "0" + minutos }
+				if(segundos<10)  { segundos = "0" + segundos }
+
+				var mlli = mili / 10;
+				var milli = mlli.toFixed()
+
+				pmili.textContent = milli;
+				pminutos.textContent = minutos;
+				psegundos.textContent = segundos;
+}
+
+act();
+
+setInterval(act, 10);
+
+    var utc = function() {
+        
+        var utcfecha = new Date;
+            var ampmm;
+            var diasemanass = utcfecha.getUTCDay();
+            var diass = utcfecha.getUTCDate();
+            var mess = utcfecha.getUTCMonth();
+            var yearr = utcfecha.getUTCFullYear();
+            var segundoss = utcfecha.getUTCSeconds();
+            var minutoss = utcfecha.getUTCMinutes();
+            var horass = utcfecha.getUTCHours();
+            
+            var pdiasemanass = document.getElementById("diasemana");
+            var pdiass = document.getElementById("dia");
+            var pmess = document.getElementById("mes");
+            var pyearr = document.getElementById("year");
+            var psegundoss = document.getElementById("segundos");
+            var pminutoss = document.getElementById("minutos");
+            var phorass = document.getElementById("horas");
+            var pampmm = document.getElementById("ampm")
+            
+            if(horass>=12) {
+					horass = horass - 12;
+					ampmm = "PM";
+				} else {
+					ampmm = "AM";
+				}
+				
+				if(horass==0) {
+					horass = 12;
+				};
+				
+				if(minutoss<10) { minutoss = "0" + minutoss }
+				if(segundoss<10)  { segundoss = "0" + segundoss }
+            
+            
+            var semanass = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+            pdiasemanass.textContent = semanass[diasemanass];
+            
+            var mesess = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Septiembre','Diciembre'];
+			pmess.textContent = mesess[mess];
+            
+            pdiass.textContent = diass;
+            pyearr.textContent = yearr;
+            psegundoss.textContent = segundoss;
+            pminutoss.textContent = minutoss;
+            phorass.textContent = horass;
+            pampmm.textContent = ampmm;
+            
+            
+    }
+       
+    utc(); 
+    
+    setInterval(utc, 1000);
+
+	</script>
+
+
+</body>
+</html>
